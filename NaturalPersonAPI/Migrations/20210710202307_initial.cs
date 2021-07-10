@@ -68,7 +68,7 @@ namespace NaturalPersonAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NaturalPersonId = table.Column<long>(type: "bigint", nullable: true)
+                    NaturalPersonId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -78,7 +78,7 @@ namespace NaturalPersonAPI.Migrations
                         column: x => x.NaturalPersonId,
                         principalTable: "NaturalPeople",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -86,11 +86,44 @@ namespace NaturalPersonAPI.Migrations
                 columns: new[] { "Id", "CityName" },
                 values: new object[,]
                 {
-                    { 1, "Kutaisi" },
-                    { 2, "Tbilisi" },
-                    { 3, "Batumi" },
-                    { 4, "Rustavi" },
-                    { 5, "Gori" }
+                    { 1, "Asgard" },
+                    { 2, "Gotham" },
+                    { 3, "New York City" },
+                    { 4, "Wakanda" },
+                    { 5, "Kutaisi" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Relations",
+                columns: new[] { "Id", "RelatedPersonId", "RelationType", "parentPersonId" },
+                values: new object[,]
+                {
+                    { 1L, 2L, "Friend", 1L },
+                    { 2L, 3L, "Other", 1L },
+                    { 3L, 3L, "Friend", 2L }
+                });
+
+            migrationBuilder.InsertData(
+                table: "NaturalPeople",
+                columns: new[] { "Id", "BirthDate", "CityId", "FirstName", "Gender", "LastName", "PersonalNumber", "Photo" },
+                values: new object[,]
+                {
+                    { 4L, new DateTime(1994, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Thor", "Male", "Odinson", "333", null },
+                    { 3L, new DateTime(1994, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "Bruce", "Male", "Wayne", "333", null },
+                    { 1L, new DateTime(1994, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, "Pitter", "Male", "Parker", "111", null },
+                    { 2L, new DateTime(1994, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 4, "Black", "Male", "Panther", "222", null },
+                    { 5L, new DateTime(1994, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 5, "glexo", "Male", "vichi", "333", null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "PhoneNumbers",
+                columns: new[] { "Id", "NaturalPersonId", "Phone", "Type" },
+                values: new object[,]
+                {
+                    { 1L, 1L, "555555111", "Home" },
+                    { 2L, 1L, "555111666", "Office" },
+                    { 3L, 2L, "555444666", "Home" },
+                    { 4L, 2L, "555888777", "Office" }
                 });
 
             migrationBuilder.CreateIndex(

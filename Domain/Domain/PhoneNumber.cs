@@ -13,5 +13,6 @@ namespace NaturalPersonAPI.Domain
         public long Id { get; set; }
         public string Type { get; set; }
         public string Phone { get; set; }
+        public long NaturalPersonId { get; set; }
     }
 }

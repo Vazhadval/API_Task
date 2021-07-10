@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using NaturalPersonAPI.Contracts.Requests;
+using NaturalPersonAPI.Contracts.Responses;
 using NaturalPersonAPI.Domain;
 using NaturalPersonAPI.Domain.Enums;
 using NaturalPersonAPI.Helper;
 using NaturalPersonAPI.Repository;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -146,15 +148,26 @@ namespace NaturalPersonAPI.Controllers
         }
 
         [HttpGet("/searchPeople")]
-        public IActionResult SearchPeople(SearchPeopleRequest request)
+        public IActionResult SearchPeople([FromQuery] SearchPeopleRequest request)
         {
-            return Ok(_naturalPersonService.SearchPeople(request));
+
+            var people = _naturalPersonService.SearchPeople(request);
+
+            return Ok(new SearchPeopleResponse
+            {
+                People = people,
+                CurrentPage = people.CurrentPage,
+                TotalPages = people.TotalPages,
+                PageSize = people.PageSize,
+                HasNext = people.HasNext,
+                HasPrevious = people.HasPrevious,
+                TotalCount = people.TotalCount
+            });
         }
 
         [HttpGet("/getPersonReport")]
         public async Task<IActionResult> GetPersonReport(long personId)
         {
-
             return Ok(await _naturalPersonService.GetPersonReport(personId));
         }
     }

@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
+using NaturalPersonAPI.Contracts;
 using NaturalPersonAPI.Contracts.Requests;
 using NaturalPersonAPI.Contracts.Responses;
 using NaturalPersonAPI.Domain;
 using NaturalPersonAPI.Domain.Enums;
+using NaturalPersonAPI.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +19,7 @@ namespace NaturalPersonAPI.Repository
         Task<NaturalPerson> GetPersonByIdAsync(long id, bool includeRelatedPeople);
         Task<bool> DeleteRelatedPerson(long parentId, long relatedId);
         Task<bool> SetPhotoToPersonAsync(long personId, string photoPath);
-        IEnumerable<NaturalPerson> SearchPeople(SearchPeopleRequest searchTerm);
+        PagedList<NaturalPerson> SearchPeople(SearchPeopleRequest searchTerm);
         Task<GetPersonReportResponse> GetPersonReport(long personId);
         Task<bool> CityExistsAsync(int cityId);
         Task<bool> SaveChangesAsync();

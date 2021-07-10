@@ -10,7 +10,7 @@ using NaturalPersonAPI.DataContext;
 namespace NaturalPersonAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210710131927_initial")]
+    [Migration("20210710202307_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,27 +39,27 @@ namespace NaturalPersonAPI.Migrations
                         new
                         {
                             Id = 1,
-                            CityName = "Kutaisi"
+                            CityName = "Asgard"
                         },
                         new
                         {
                             Id = 2,
-                            CityName = "Tbilisi"
+                            CityName = "Gotham"
                         },
                         new
                         {
                             Id = 3,
-                            CityName = "Batumi"
+                            CityName = "New York City"
                         },
                         new
                         {
                             Id = 4,
-                            CityName = "Rustavi"
+                            CityName = "Wakanda"
                         },
                         new
                         {
                             Id = 5,
-                            CityName = "Gori"
+                            CityName = "Kutaisi"
                         });
                 });
 
@@ -96,6 +96,58 @@ namespace NaturalPersonAPI.Migrations
                     b.HasIndex("CityId");
 
                     b.ToTable("NaturalPeople");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            BirthDate = new DateTime(1994, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CityId = 3,
+                            FirstName = "Pitter",
+                            Gender = "Male",
+                            LastName = "Parker",
+                            PersonalNumber = "111"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            BirthDate = new DateTime(1994, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CityId = 4,
+                            FirstName = "Black",
+                            Gender = "Male",
+                            LastName = "Panther",
+                            PersonalNumber = "222"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            BirthDate = new DateTime(1994, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CityId = 2,
+                            FirstName = "Bruce",
+                            Gender = "Male",
+                            LastName = "Wayne",
+                            PersonalNumber = "333"
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            BirthDate = new DateTime(1994, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CityId = 1,
+                            FirstName = "Thor",
+                            Gender = "Male",
+                            LastName = "Odinson",
+                            PersonalNumber = "333"
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            BirthDate = new DateTime(1994, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CityId = 5,
+                            FirstName = "glexo",
+                            Gender = "Male",
+                            LastName = "vichi",
+                            PersonalNumber = "333"
+                        });
                 });
 
             modelBuilder.Entity("NaturalPersonAPI.Domain.PhoneNumber", b =>
@@ -105,7 +157,7 @@ namespace NaturalPersonAPI.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long?>("NaturalPersonId")
+                    b.Property<long>("NaturalPersonId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Phone")
@@ -119,6 +171,36 @@ namespace NaturalPersonAPI.Migrations
                     b.HasIndex("NaturalPersonId");
 
                     b.ToTable("PhoneNumbers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            NaturalPersonId = 1L,
+                            Phone = "555555111",
+                            Type = "Home"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            NaturalPersonId = 1L,
+                            Phone = "555111666",
+                            Type = "Office"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            NaturalPersonId = 2L,
+                            Phone = "555444666",
+                            Type = "Home"
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            NaturalPersonId = 2L,
+                            Phone = "555888777",
+                            Type = "Office"
+                        });
                 });
 
             modelBuilder.Entity("NaturalPersonAPI.Domain.Relation", b =>
@@ -140,6 +222,29 @@ namespace NaturalPersonAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Relations");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            RelatedPersonId = 2L,
+                            RelationType = "Friend",
+                            parentPersonId = 1L
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            RelatedPersonId = 3L,
+                            RelationType = "Other",
+                            parentPersonId = 1L
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            RelatedPersonId = 3L,
+                            RelationType = "Friend",
+                            parentPersonId = 2L
+                        });
                 });
 
             modelBuilder.Entity("NaturalPersonAPI.Domain.NaturalPerson", b =>
@@ -157,7 +262,9 @@ namespace NaturalPersonAPI.Migrations
                 {
                     b.HasOne("NaturalPersonAPI.Domain.NaturalPerson", null)
                         .WithMany("PhoneNumbers")
-                        .HasForeignKey("NaturalPersonId");
+                        .HasForeignKey("NaturalPersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("NaturalPersonAPI.Domain.NaturalPerson", b =>

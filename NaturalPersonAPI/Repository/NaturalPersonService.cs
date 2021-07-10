@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.EntityFrameworkCore;
+using NaturalPersonAPI.Contracts;
 using NaturalPersonAPI.Contracts.Requests;
 using NaturalPersonAPI.Contracts.Responses;
 using NaturalPersonAPI.DataContext;
 using NaturalPersonAPI.Domain;
 using NaturalPersonAPI.Domain.Enums;
+using NaturalPersonAPI.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -105,10 +107,6 @@ namespace NaturalPersonAPI.Repository
             }
 
             var relations = await _context.Relations.Where(x => x.parentPersonId == id).Select(y => y.RelatedPersonId).ToListAsync();
-            if (relations.Count() < 1)
-            {
-                return null;
-            }
 
             p.RelatedPeople = new List<NaturalPerson>();
 
@@ -158,9 +156,26 @@ namespace NaturalPersonAPI.Repository
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public IEnumerable<NaturalPerson> SearchPeople(SearchPeopleRequest searchTerm)
+        public PagedList<NaturalPerson> SearchPeople(SearchPeopleRequest searchTerm)
         {
-            return _context.NaturalPeople.Include(x => x.City).Include(x => x.PhoneNumbers);
+            var people = _context.NaturalPeople.Include(x => x.City).Include(x => x.PhoneNumbers) as IQueryable<NaturalPerson>;
+
+            if (!string.IsNullOrEmpty(searchTerm.FirstName))
+            {
+                people = people.Where(x => x.FirstName.ToUpper().Contains(searchTerm.FirstName.ToUpper()));
+            }
+
+            if (!string.IsNullOrEmpty(searchTerm.LastName))
+            {
+                people = people.Where(x => x.LastName.ToUpper().Contains(searchTerm.LastName.ToUpper()));
+            }
+
+            if (!string.IsNullOrEmpty(searchTerm.PesonalNumber))
+            {
+                people = people.Where(x => x.PersonalNumber.ToUpper().Contains(searchTerm.PesonalNumber.ToUpper()));
+            }
+
+            return PagedList<NaturalPerson>.ToPagedList(people, searchTerm.PageNumber, searchTerm.PageSize);
         }
 
         public async Task<bool> SetPhotoToPersonAsync(long personId, string photoPath)
