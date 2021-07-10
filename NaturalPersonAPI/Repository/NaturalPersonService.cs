@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.EntityFrameworkCore;
 using NaturalPersonAPI.Contracts.Requests;
+using NaturalPersonAPI.Contracts.Responses;
 using NaturalPersonAPI.DataContext;
 using NaturalPersonAPI.Domain;
 using NaturalPersonAPI.Domain.Enums;
@@ -22,6 +23,12 @@ namespace NaturalPersonAPI.Repository
 
         public async Task<NaturalPerson> AddRelatedPersonAsync(long parentPersonId, RelationType relationType, NaturalPerson p)
         {
+            var city = await CityExistsAsync(p.CityId);
+            if (!city)
+            {
+                return null;
+            }
+
             var parent = await _context.NaturalPeople.FirstOrDefaultAsync(x => x.Id == parentPersonId);
             if (parent == null)
             {
@@ -62,24 +69,88 @@ namespace NaturalPersonAPI.Repository
 
         public async Task<bool> DeleteRelatedPerson(long parentId, long relatedId)
         {
+            //check if relations exists
             var relation = await _context.Relations.FirstOrDefaultAsync(x => x.parentPersonId == parentId && x.RelatedPersonId == relatedId);
             if (relation == null)
             {
                 return false;
             }
 
-            var relatedPerson = await _context.NaturalPeople.FirstOrDefaultAsync(x => x.Id == relatedId);
-
+            var relatedPerson = await GetPersonByIdAsync(relatedId, false);
+            //remove related person
             _context.NaturalPeople.Remove(relatedPerson);
-
+            //remove relation
             _context.Relations.Remove(relation);
+            //remove phone numbers also
+            _context.PhoneNumbers.RemoveRange(relatedPerson.PhoneNumbers);
+
+            await _context.SaveChangesAsync();
 
             return true;
         }
 
-        public Task<NaturalPerson> GetPersonByIdAsync(long id)
+        public async Task<NaturalPerson> GetPersonByIdAsync(long id, bool includeRelatedPople)
         {
-            return _context.NaturalPeople.Include(x => x.City).Include(x => x.PhoneNumbers).FirstOrDefaultAsync(x => x.Id == id);
+            if (!includeRelatedPople)
+            {
+                var a = await _context.NaturalPeople.Include(x => x.City).Include(x => x.PhoneNumbers).FirstOrDefaultAsync(x => x.Id == id);
+                return a;
+            }
+
+
+            var p = await _context.NaturalPeople.Include(x => x.City).Include(x => x.PhoneNumbers).FirstOrDefaultAsync(x => x.Id == id);
+            if (p == null)
+            {
+                return null;
+            }
+
+            var relations = await _context.Relations.Where(x => x.parentPersonId == id).Select(y => y.RelatedPersonId).ToListAsync();
+            if (relations.Count() < 1)
+            {
+                return null;
+            }
+
+            p.RelatedPeople = new List<NaturalPerson>();
+
+            foreach (var relatedPersonid in relations)
+            {
+                var related = await _context.NaturalPeople.Include(x => x.City).Include(x => x.PhoneNumbers).FirstOrDefaultAsync(x => x.Id == relatedPersonid);
+                p.RelatedPeople.Add(related);
+            }
+
+            return p;
+
+        }
+
+        public async Task<GetPersonReportResponse> GetPersonReport(long personId)
+        {
+            var person = await GetPersonByIdAsync(personId, false);
+            if (person == null)
+            {
+                return null;
+            }
+
+
+            var relations = _context.Relations.Where(x => x.parentPersonId == personId);
+
+            var dict = new Dictionary<string, int>();
+
+            foreach (var relation in relations)
+            {
+                if (dict.ContainsKey(relation.RelationType))
+                {
+                    dict[relation.RelationType]++;
+                }
+                else
+                {
+                    dict.Add(relation.RelationType, 1);
+                }
+            }
+            return new GetPersonReportResponse
+            {
+                Relations = dict
+            };
+
         }
 
         public async Task<bool> SaveChangesAsync()
@@ -87,7 +158,7 @@ namespace NaturalPersonAPI.Repository
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public IEnumerable<NaturalPerson> SearchPeople()
+        public IEnumerable<NaturalPerson> SearchPeople(SearchPeopleRequest searchTerm)
         {
             return _context.NaturalPeople.Include(x => x.City).Include(x => x.PhoneNumbers);
         }

@@ -126,14 +126,14 @@ namespace NaturalPersonAPI.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long>("MainPersonId")
-                        .HasColumnType("bigint");
-
                     b.Property<long>("RelatedPersonId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("RelationType")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("parentPersonId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 

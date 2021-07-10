@@ -23,5 +23,8 @@ namespace NaturalPersonAPI.Domain
         public virtual List<PhoneNumber> PhoneNumbers { get; set; }
         public string Photo { get; set; }
 
+        [NotMapped]
+        public List<NaturalPerson> RelatedPeople { get; set; }
+
     }
 }

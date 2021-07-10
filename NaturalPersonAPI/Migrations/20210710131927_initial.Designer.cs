@@ -10,7 +10,7 @@ using NaturalPersonAPI.DataContext;
 namespace NaturalPersonAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210710082656_initial")]
+    [Migration("20210710131927_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -128,14 +128,14 @@ namespace NaturalPersonAPI.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long>("MainPersonId")
-                        .HasColumnType("bigint");
-
                     b.Property<long>("RelatedPersonId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("RelationType")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("parentPersonId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 

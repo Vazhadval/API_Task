@@ -30,28 +30,7 @@ namespace NaturalPersonAPI.Controllers
         }
 
 
-        [HttpGet("/searchPeople")]
-        public IActionResult GetAllPeople()
-        {
-            return Ok(_naturalPersonService.SearchPeople());
-        }
-
-        [HttpPatch("/updatePerson")]
-        public async Task<IActionResult> UpdatePerson(long id, [FromBody] JsonPatchDocument<NaturalPerson> person)
-        {
-            var p = await _naturalPersonService.GetPersonByIdAsync(id);
-            if (p == null)
-            {
-                return NotFound();
-            }
-
-            person.ApplyTo(p, ModelState);
-            await _naturalPersonService.SaveChangesAsync();
-
-            return Ok(p);
-        }
-
-        [HttpPost("/naturalPerson")]
+        [HttpPost("/createPerson")]
         public async Task<IActionResult> Create(CreateNaturalPersonRequest request)
         {
             if (!await _naturalPersonService.CityExistsAsync(request.CityId))
@@ -82,11 +61,25 @@ namespace NaturalPersonAPI.Controllers
             return Ok(result);
         }
 
+        [HttpPatch("/updatePerson")]
+        public async Task<IActionResult> UpdatePerson(long id, [FromBody] JsonPatchDocument<NaturalPerson> person)
+        {
+            var p = await _naturalPersonService.GetPersonByIdAsync(id, false);
+            if (p == null)
+            {
+                return NotFound();
+            }
+
+            person.ApplyTo(p, ModelState);
+            await _naturalPersonService.SaveChangesAsync();
+
+            return Ok(p);
+        }
 
         [HttpPost("/uploadOrEditPersonImage")]
         public async Task<IActionResult> UploadOrdEditPersonPhoto(long id, IFormFile photo)
         {
-            var p = await _naturalPersonService.GetPersonByIdAsync(id);
+            var p = await _naturalPersonService.GetPersonByIdAsync(id, false);
             if (p == null)
             {
                 return NotFound();
@@ -109,7 +102,6 @@ namespace NaturalPersonAPI.Controllers
 
             return Ok(photoPath);
         }
-
 
         [HttpPost("/addRelatedPerson")]
         public async Task<IActionResult> AddRelatedPerson(long parentPersonId, RelationType relationType, CreateNaturalPersonRequest person)
@@ -138,9 +130,32 @@ namespace NaturalPersonAPI.Controllers
         [HttpDelete("/deleteRelatedPerson")]
         public async Task<IActionResult> DeleteRelatedPerson(DeleteRelatedPersonRequest request)
         {
-            await _naturalPersonService.DeleteRelatedPerson(request.ParentPersonId, request.RelatedPersonId);
+            var result = await _naturalPersonService.DeleteRelatedPerson(request.ParentPersonId, request.RelatedPersonId);
+            if (!result)
+            {
+                return BadRequest();
+            }
 
-            return Ok();
+            return NoContent();
+        }
+
+        [HttpGet("/getPersonById")]
+        public async Task<IActionResult> GetPersonById(long personId)
+        {
+            return Ok(await _naturalPersonService.GetPersonByIdAsync(personId, includeRelatedPeople: true));
+        }
+
+        [HttpGet("/searchPeople")]
+        public IActionResult SearchPeople(SearchPeopleRequest request)
+        {
+            return Ok(_naturalPersonService.SearchPeople(request));
+        }
+
+        [HttpGet("/getPersonReport")]
+        public async Task<IActionResult> GetPersonReport(long personId)
+        {
+
+            return Ok(await _naturalPersonService.GetPersonReport(personId));
         }
     }
 }

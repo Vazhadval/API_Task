@@ -35,12 +35,7 @@ namespace NaturalPersonAPI
         {
 
             services.AddControllers()
-                .AddNewtonsoftJson()
-                .AddJsonOptions(opts =>
-                {
-                    var enumConverter = new JsonStringEnumConverter();
-                    opts.JsonSerializerOptions.Converters.Add(enumConverter);
-                });
+                .AddNewtonsoftJson();
 
 
 

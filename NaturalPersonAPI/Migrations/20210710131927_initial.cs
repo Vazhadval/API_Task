@@ -27,7 +27,7 @@ namespace NaturalPersonAPI.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RelationType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MainPersonId = table.Column<long>(type: "bigint", nullable: false),
+                    parentPersonId = table.Column<long>(type: "bigint", nullable: false),
                     RelatedPersonId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>

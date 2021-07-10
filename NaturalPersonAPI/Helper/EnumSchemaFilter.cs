@@ -14,6 +14,7 @@ namespace NaturalPersonAPI.Helper
         {
             if (context.Type.IsEnum)
             {
+                model.Type = "string";
                 model.Enum.Clear();
                 Enum.GetNames(context.Type)
                     .ToList()
