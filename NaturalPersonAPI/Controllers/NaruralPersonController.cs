@@ -37,7 +37,11 @@ namespace NaturalPersonAPI.Controllers
         {
             if (!await _naturalPersonService.CityExistsAsync(request.CityId))
             {
-                return BadRequest("City do not exist");
+                return BadRequest(new CreateNaturalPersonResponse
+                {
+                    Success = false,
+                    Error = "City with this id does not exist"
+                });
             }
 
             var person = new NaturalPerson
@@ -54,13 +58,21 @@ namespace NaturalPersonAPI.Controllers
             var result = await _naturalPersonService.CreatePersonAsync(person);
             if (result == null)
             {
-                return BadRequest();
+                return BadRequest(new CreateNaturalPersonResponse
+                {
+                    Success = false,
+                    Error = "Incorrect fieds"
+                });
             }
 
             //var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
             //var locationUri = baseUrl + "api/naturalpeople/" + result;
 
-            return Ok(result);
+            return Ok(new CreateNaturalPersonResponse
+            {
+                Success = true,
+                CreatedPerson = result
+            });
         }
 
         [HttpPatch("/updatePerson")]
