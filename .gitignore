@@ -1,0 +1,8 @@
+NaturalPersonAPI/obj/
+NaturalPersonAPI/.vs/
+Domain/bin/
+Domain/obj/Debug/
+NaturalPersonAPI.Contracts/bin/
+NaturalPersonAPI.Contracts/obj/
+NaturalPersonAPI/bin/
+NaturalPersonAPI/wwwroot/uploads/
