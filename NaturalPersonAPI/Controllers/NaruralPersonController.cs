@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using NaturalPersonAPI.Contracts.Requests;
 using NaturalPersonAPI.Domain;
 using NaturalPersonAPI.Domain.Enums;
@@ -8,7 +9,9 @@ using NaturalPersonAPI.Helper;
 using NaturalPersonAPI.Repository;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace NaturalPersonAPI.Controllers
@@ -129,6 +132,15 @@ namespace NaturalPersonAPI.Controllers
             }
 
             return Ok(result);
+        }
+
+
+        [HttpDelete("/deleteRelatedPerson")]
+        public async Task<IActionResult> DeleteRelatedPerson(DeleteRelatedPersonRequest request)
+        {
+            await _naturalPersonService.DeleteRelatedPerson(request.ParentPersonId, request.RelatedPersonId);
+
+            return Ok();
         }
     }
 }

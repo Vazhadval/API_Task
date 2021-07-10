@@ -14,6 +14,7 @@ namespace NaturalPersonAPI.Repository
         Task<NaturalPerson> CreatePersonAsync(NaturalPerson p);
         Task<NaturalPerson> AddRelatedPersonAsync(long parentPersonId, RelationType relationType, NaturalPerson p);
         Task<NaturalPerson> GetPersonByIdAsync(long id);
+        Task<bool> DeleteRelatedPerson(long parentId, long relatedId);
         Task<bool> SetPhotoToPersonAsync(long personId, string photoPath);
         IEnumerable<NaturalPerson> SearchPeople();
         Task<bool> CityExistsAsync(int cityId);

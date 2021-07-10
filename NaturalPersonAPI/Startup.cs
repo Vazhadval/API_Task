@@ -4,16 +4,19 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using NaturalPersonAPI.DataContext;
+using NaturalPersonAPI.Helper;
 using NaturalPersonAPI.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace NaturalPersonAPI
@@ -31,11 +34,27 @@ namespace NaturalPersonAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers().AddNewtonsoftJson();
+            services.AddControllers()
+                .AddNewtonsoftJson()
+                .AddJsonOptions(opts =>
+                {
+                    var enumConverter = new JsonStringEnumConverter();
+                    opts.JsonSerializerOptions.Converters.Add(enumConverter);
+                });
+
+
+
+
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "NaturalPersonAPI", Version = "v1" });
+                c.SchemaFilter<EnumSchemaFilter>();
             });
+
+
+
+            services.AddSwaggerGenNewtonsoftSupport();
 
 
             services.AddDbContext<AppDbContext>(o => o.UseSqlServer(Configuration.GetConnectionString("Default")));

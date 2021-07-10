@@ -60,6 +60,23 @@ namespace NaturalPersonAPI.Repository
             return created > 0 ? p : null;
         }
 
+        public async Task<bool> DeleteRelatedPerson(long parentId, long relatedId)
+        {
+            var relation = await _context.Relations.FirstOrDefaultAsync(x => x.parentPersonId == parentId && x.RelatedPersonId == relatedId);
+            if (relation == null)
+            {
+                return false;
+            }
+
+            var relatedPerson = await _context.NaturalPeople.FirstOrDefaultAsync(x => x.Id == relatedId);
+
+            _context.NaturalPeople.Remove(relatedPerson);
+
+            _context.Relations.Remove(relation);
+
+            return true;
+        }
+
         public Task<NaturalPerson> GetPersonByIdAsync(long id)
         {
             return _context.NaturalPeople.Include(x => x.City).Include(x => x.PhoneNumbers).FirstOrDefaultAsync(x => x.Id == id);
