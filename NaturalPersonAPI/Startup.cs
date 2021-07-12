@@ -54,6 +54,7 @@ namespace NaturalPersonAPI
 
             services.AddSwaggerGenNewtonsoftSupport();
 
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddDbContext<AppDbContext>(o => o.UseSqlServer(Configuration.GetConnectionString("Default")));
 

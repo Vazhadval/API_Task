@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using NaturalPersonAPI.Contracts.Dtos;
 using NaturalPersonAPI.Contracts.Requests;
 using NaturalPersonAPI.Contracts.Responses;
 using NaturalPersonAPI.Domain;
@@ -24,11 +26,13 @@ namespace NaturalPersonAPI.Controllers
     {
         private readonly INaturalPersonService _naturalPersonService;
         private readonly IFileProcessingService _fileProcessingService;
+        private readonly IMapper _mapper;
 
-        public NaruralPersonController(INaturalPersonService naturalPersonService, IFileProcessingService fileProcessingService)
+        public NaruralPersonController(INaturalPersonService naturalPersonService, IFileProcessingService fileProcessingService, IMapper mapper)
         {
             _naturalPersonService = naturalPersonService;
             _fileProcessingService = fileProcessingService;
+            _mapper = mapper;
         }
 
 
@@ -83,6 +87,8 @@ namespace NaturalPersonAPI.Controllers
             {
                 return NotFound();
             }
+
+            var a = _mapper.Map<NaturalPersonDto>(p);
 
             person.ApplyTo(p, ModelState);
             await _naturalPersonService.SaveChangesAsync();
