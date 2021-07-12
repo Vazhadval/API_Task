@@ -27,7 +27,9 @@ namespace NaturalPersonAPI.Contracts
         public static PagedList<T> ToPagedList(IQueryable<T> sourse, int pageNumber, int pageSize)
         {
             var count = sourse.Count();
-            var items = sourse.Skip((pageNumber - 1) * pageSize)
+            var items = sourse
+                .OrderBy(x => x)
+                .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
 

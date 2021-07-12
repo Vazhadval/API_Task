@@ -1,4 +1,5 @@
-﻿using NaturalPersonAPI.Domain.Enums;
+﻿using Domain.Attributes;
+using NaturalPersonAPI.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,6 +12,7 @@ namespace NaturalPersonAPI.Domain
     public class NaturalPerson
     {
         [Key]
+        [DoNotPatch]
         public long Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -19,11 +21,13 @@ namespace NaturalPersonAPI.Domain
         public DateTime BirthDate { get; set; }
         public int CityId { get; set; }
         [ForeignKey(nameof(CityId))]
+        [DoNotPatch]
         public City City { get; set; }
         public virtual List<PhoneNumber> PhoneNumbers { get; set; }
         public string Photo { get; set; }
 
         [NotMapped]
+        [DoNotPatch]
         public List<NaturalPerson> RelatedPeople { get; set; }
 
     }

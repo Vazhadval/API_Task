@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using Microsoft.Extensions.Localization;
 using NaturalPersonAPI.Contracts.Dtos;
 using NaturalPersonAPI.Contracts.Requests;
 using NaturalPersonAPI.Contracts.Responses;
@@ -15,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Reflection;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
@@ -24,19 +26,27 @@ namespace NaturalPersonAPI.Controllers
     [ApiController]
     public class NaruralPersonController : ControllerBase
     {
+        private readonly IStringLocalizer<NaruralPersonController> _localizer;
         private readonly INaturalPersonService _naturalPersonService;
         private readonly IFileProcessingService _fileProcessingService;
         private readonly IMapper _mapper;
 
-        public NaruralPersonController(INaturalPersonService naturalPersonService, IFileProcessingService fileProcessingService, IMapper mapper)
+        public NaruralPersonController(IStringLocalizer<NaruralPersonController> localizer, INaturalPersonService naturalPersonService, IFileProcessingService fileProcessingService, IMapper mapper)
         {
             _naturalPersonService = naturalPersonService;
             _fileProcessingService = fileProcessingService;
             _mapper = mapper;
+            _localizer = localizer;
+        }
+
+        [HttpGet("GetString")]
+        public string GetString()
+        {
+            return _localizer["CityNotExists"];
         }
 
 
-        [HttpPost("/createPerson")]
+        [HttpPost("Create")]
         public async Task<IActionResult> Create(CreateNaturalPersonRequest request)
         {
             if (!await _naturalPersonService.CityExistsAsync(request.CityId))
@@ -44,7 +54,7 @@ namespace NaturalPersonAPI.Controllers
                 return BadRequest(new CreateNaturalPersonResponse
                 {
                     Success = false,
-                    Error = "City with this id does not exist"
+                    Error = _localizer["CityNotExist"]
                 });
             }
 
@@ -80,20 +90,19 @@ namespace NaturalPersonAPI.Controllers
         }
 
         [HttpPatch("/updatePerson")]
-        public async Task<IActionResult> UpdatePerson(long id, [FromBody] JsonPatchDocument<NaturalPerson> person)
+        public async Task<IActionResult> UpdatePerson(long id, [FromBody] JsonPatchDocument<NaturalPerson> patch)
         {
             var p = await _naturalPersonService.GetPersonByIdAsync(id, false);
             if (p == null)
             {
                 return NotFound();
             }
+            patch.CheckForNotUpdatableProperties();
 
-            var a = _mapper.Map<NaturalPersonDto>(p);
-
-            person.ApplyTo(p, ModelState);
+            patch.ApplyTo(p, ModelState);
             await _naturalPersonService.SaveChangesAsync();
 
-            return Ok(p);
+            return Ok(await _naturalPersonService.GetPersonByIdAsync(id, false));
         }
 
         [HttpPost("/uploadOrEditPersonImage")]
@@ -102,7 +111,7 @@ namespace NaturalPersonAPI.Controllers
             var p = await _naturalPersonService.GetPersonByIdAsync(id, false);
             if (p == null)
             {
-                return NotFound();
+                return NotFound("Person does not exist");
             }
 
             if (!photo.IsImage())
@@ -113,7 +122,7 @@ namespace NaturalPersonAPI.Controllers
             string relativePhotoPath = await _fileProcessingService.UploadFileAsync(photo);
             if (relativePhotoPath == string.Empty)
             {
-                return BadRequest();
+                return BadRequest("Error while uploading image");
             }
 
             string photoPath = Request.Scheme + "://" + Request.Host + relativePhotoPath;

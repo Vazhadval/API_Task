@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "9RNaQVdfHJY0PtEB/LipnWe9qXGSisKP6wLHvB8PbNdzCn6noe1h+vIJFeaPJmHbcipU6lF9Dy1dF7RO3D1Ndg==",
+  "dgSpecHash": "qF1vAoEE/Jz9GsupO/U0gF+0WvoUqu+jsmItkFV+nB4atWh5GD4omi7HeybNGGMe/GChEcXSfZ8FGUGN7irYQQ==",
   "success": true,
-  "projectFilePath": "E:\\Projects\\GitHub Projects\\API_Task\\Domain\\Domain.csproj",
+  "projectFilePath": "E:\\api task\\API_Task\\Domain\\Domain.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\pc\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
-    "C:\\Users\\pc\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
-    "C:\\Users\\pc\\.nuget\\packages\\system.componentmodel.annotations\\5.0.0\\system.componentmodel.annotations.5.0.0.nupkg.sha512"
+    "C:\\Users\\vazha.dvalishvili\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
+    "C:\\Users\\vazha.dvalishvili\\.nuget\\packages\\system.componentmodel.annotations\\5.0.0\\system.componentmodel.annotations.5.0.0.nupkg.sha512"
   ],
   "logs": []
 }

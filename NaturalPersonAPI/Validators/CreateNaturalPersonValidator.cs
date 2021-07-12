@@ -62,7 +62,9 @@ namespace NaturalPersonAPI.Validators
                 .Must(x => x.Phone.Length >= 4 && x.Phone.Length <= 50)
                 .WithMessage("Phone number should be between 4 and 50 characters");
 
-
+            RuleFor(x => x.PhoneNumbers)
+                .NotNull()
+                .WithMessage("Person shoud have at least one phone number");
 
         }
     }
