@@ -28,7 +28,6 @@ namespace NaturalPersonAPI.Contracts
         {
             var count = sourse.Count();
             var items = sourse
-                .OrderBy(x => x)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();

@@ -1,6 +1,8 @@
 ﻿using Domain.Domain.Enums;
 using FluentValidation;
+using Microsoft.Extensions.Localization;
 using NaturalPersonAPI.Contracts.Requests;
+using NaturalPersonAPI.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +13,13 @@ namespace NaturalPersonAPI.Validators
 {
     public class CreateNaturalPersonValidator : AbstractValidator<CreateNaturalPersonRequest>
     {
-        public CreateNaturalPersonValidator()
+        private readonly IStringLocalizer<NaruralPersonController> _localizer;
+
+        public CreateNaturalPersonValidator(IStringLocalizer<NaruralPersonController> localizer)
         {
+            _localizer = localizer;
+
+
             RuleFor(x => x.FirstName)
                 .NotEmpty()
                 .MinimumLength(2)
@@ -23,49 +30,50 @@ namespace NaturalPersonAPI.Validators
 
             RuleFor(x => x.FirstName)
                 .Matches(@"^[ა-ჰ]+$").When(x => Regex.IsMatch(x.FirstName, @"[ა-ჰ]"))
-                .WithMessage("FirstName should contain only Latin or only Georgian letters.")
+                .WithMessage(_localizer["OnlyLatinOrGeorgian"])
                 .Matches(@"^[a-zA-Z]+$").When(x => Regex.IsMatch(x.FirstName, @"[a-zA-Z]"))
-                .WithMessage("FirstName should contain only Latin or only Georgian letters.");
+                .WithMessage(_localizer["OnlyLatinOrGeorgian"]);
 
             RuleFor(x => x.LastName)
                .NotEmpty()
                .MinimumLength(2)
-               .MaximumLength(50);
+               .MaximumLength(50)
+               .WithMessage(_localizer["FirstNameLengthMsg"]);
+
 
 
 
 
             RuleFor(x => x.LastName)
                 .Matches(@"^[ა-ჰ]+$").When(x => Regex.IsMatch(x.LastName, @"[ა-ჰ]"))
-                .WithMessage("FirstName should contain only Latin or only Georgian letters.")
+                .WithMessage(_localizer["OnlyLatinOrGeorgian"])
                 .Matches(@"^[a-zA-Z]+$").When(x => Regex.IsMatch(x.LastName, @"[a-zA-Z]"))
-                .WithMessage("FirstName should contain only Latin or only Georgian letters.");
+                .WithMessage(_localizer["OnlyLatinOrGeorgian"]);
 
 
             RuleFor(x => x.Gender)
                 .Must(x => x.ToUpper() == "MALE" || x.ToUpper() == "FEMALE")
-                .WithMessage("Choose 'Male' or 'Female'");
+                .WithMessage(_localizer["MaleOrFemale"]);
 
 
             RuleFor(x => x.PersonalNumber)
                 .Matches(@"\d{11}")
-                .WithMessage("Personal number should contain 11 digits");
+                .WithMessage(_localizer["PersonalNumber11Digits"]);
 
             RuleFor(x => x.BirthDate)
                 .LessThan(new DateTime(DateTime.Now.Year - 18, DateTime.Now.Month, DateTime.Now.Day))
-                .WithMessage("Person should at least 18 years old.");
+                .WithMessage(_localizer["AdultCheck"]);
 
 
             RuleForEach(x => x.PhoneNumbers)
                 .Must(x => x.PhoneNumberType.ToUpper() == "HOME" || x.PhoneNumberType.ToUpper() == "OFFICE")
-                .WithMessage("Choose 'Home' or 'Office'")
+                .WithMessage(_localizer["PhoneType"])
                 .Must(x => x.Phone.Length >= 4 && x.Phone.Length <= 50)
-                .WithMessage("Phone number should be between 4 and 50 characters");
+                .WithMessage(_localizer["PhoneNumberCheck"]);
 
             RuleFor(x => x.PhoneNumbers)
                 .NotNull()
-                .WithMessage("Person shoud have at least one phone number");
-
+                .WithMessage(_localizer["AtLeastOnePhone"]);
         }
     }
 }

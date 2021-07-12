@@ -117,7 +117,46 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AdultCheck" xml:space="preserve">
+    <value>Person should at least 18 years old.</value>
+  </data>
+  <data name="AtLeastOnePhone" xml:space="preserve">
+    <value>Person shoud have at least one phone number</value>
+  </data>
   <data name="CityNotExists" xml:space="preserve">
     <value>City does not exist</value>
+  </data>
+  <data name="FirstNameLengthMsg" xml:space="preserve">
+    <value>FirstName should be between 2-50 characters</value>
+  </data>
+  <data name="IncorrectFields" xml:space="preserve">
+    <value>Incorrect fieds</value>
+  </data>
+  <data name="IncorrectFileFormat" xml:space="preserve">
+    <value>Incorrect file format</value>
+  </data>
+  <data name="MaleOrFemale" xml:space="preserve">
+    <value>Choose 'Male' or 'Female'</value>
+  </data>
+  <data name="OnlyLatinOrGeorgian" xml:space="preserve">
+    <value>FirstName and LastName should contain only Latin or only Georgian letters.</value>
+  </data>
+  <data name="PersonalNumber11Digits" xml:space="preserve">
+    <value>Personal number should contain 11 digits</value>
+  </data>
+  <data name="PersonExists" xml:space="preserve">
+    <value>Person already exists</value>
+  </data>
+  <data name="PersonNotFound" xml:space="preserve">
+    <value>Person not found.</value>
+  </data>
+  <data name="PhoneNumberCheck" xml:space="preserve">
+    <value>Phone number should be between 4 and 50 characters</value>
+  </data>
+  <data name="PhoneType" xml:space="preserve">
+    <value>Choose 'Home' or 'Office'</value>
+  </data>
+  <data name="UploadError" xml:space="preserve">
+    <value>Error while uploading image</value>
   </data>
 </root>

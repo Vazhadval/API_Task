@@ -117,7 +117,46 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AdultCheck" xml:space="preserve">
+    <value>მინიმალური ასაკი 18 წელი.</value>
+  </data>
+  <data name="AtLeastOnePhone" xml:space="preserve">
+    <value>ფიზიკურ პირს უნდა ქონდეს მინიმუმ 1 ტელეფონის ნომერი</value>
+  </data>
   <data name="CityNotExists" xml:space="preserve">
     <value>ქალაქი არ მოიძებნა</value>
+  </data>
+  <data name="FirstNameLengthMsg" xml:space="preserve">
+    <value>სახელი უნდა იყოს 2-50 სიმბოლომდე</value>
+  </data>
+  <data name="IncorrectFields" xml:space="preserve">
+    <value>არასწორი მონაცემები</value>
+  </data>
+  <data name="IncorrectFileFormat" xml:space="preserve">
+    <value>ფაილის არასწორი ფორმატი</value>
+  </data>
+  <data name="MaleOrFemale" xml:space="preserve">
+    <value>აირჩიეთ 'Male' ან 'Female'</value>
+  </data>
+  <data name="OnlyLatinOrGeorgian" xml:space="preserve">
+    <value>სახელი და გვარი უნდა შეიცავდეს მხოლოდ ლათინურ ან მხოლოდ ქართულ ასოებს</value>
+  </data>
+  <data name="PersonalNumber11Digits" xml:space="preserve">
+    <value>პირადი ნომერი უნდა შეიცავდეს 11 ციფრს</value>
+  </data>
+  <data name="PersonExists" xml:space="preserve">
+    <value>ამ პირადი ნომრით პირი უკვე დარეგისტრირებულია</value>
+  </data>
+  <data name="PersonNotFound" xml:space="preserve">
+    <value>პიროვნება არ მოიძებნა</value>
+  </data>
+  <data name="PhoneNumberCheck" xml:space="preserve">
+    <value>ტელეფონის ნომერი უნდა შეიცავდეს 4-50 სიმბოლომდე</value>
+  </data>
+  <data name="PhoneType" xml:space="preserve">
+    <value>აირჩიეთ 'Home' ან 'Office'</value>
+  </data>
+  <data name="UploadError" xml:space="preserve">
+    <value>მოხდა შეცდომა ფაილის ატვირთვისას</value>
   </data>
 </root>

@@ -69,6 +69,24 @@ namespace NaturalPersonAPI.Repository
             return created > 0 ? p : null;
         }
 
+        public async Task<bool> DeletePerson(long personId)
+        {
+            var p = await _context.NaturalPeople.FirstOrDefaultAsync(x => x.Id == personId);
+            if (p == null)
+            {
+                return false;
+            }
+
+            var phoneNumbersOfPerson = _context.PhoneNumbers.Where(x => x.NaturalPersonId == personId);
+            var relations = _context.Relations.Where(x => x.parentPersonId == personId || x.RelatedPersonId == personId);
+
+            _context.PhoneNumbers.RemoveRange(phoneNumbersOfPerson);
+            _context.Relations.RemoveRange(relations);
+            _context.NaturalPeople.Remove(p);
+
+            return await _context.SaveChangesAsync() > 0;
+        }
+
         public async Task<bool> DeleteRelatedPerson(long parentId, long relatedId)
         {
             //check if relations exists
@@ -120,7 +138,7 @@ namespace NaturalPersonAPI.Repository
 
         }
 
-        public async Task<GetPersonReportResponse> GetPersonReport(long personId)
+        public async Task<Dictionary<string, int>> GetPersonReport(long personId)
         {
             var person = await GetPersonByIdAsync(personId, false);
             if (person == null)
@@ -144,11 +162,13 @@ namespace NaturalPersonAPI.Repository
                     dict.Add(relation.RelationType, 1);
                 }
             }
-            return new GetPersonReportResponse
-            {
-                Relations = dict
-            };
+            return dict;
 
+        }
+
+        public async Task<bool> PersonExistsAsync(string personalNumber)
+        {
+            return await _context.NaturalPeople.AnyAsync(x => x.PersonalNumber == personalNumber);
         }
 
         public async Task<bool> SaveChangesAsync()

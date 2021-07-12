@@ -16,11 +16,13 @@ namespace NaturalPersonAPI.Repository
     {
         Task<NaturalPerson> CreatePersonAsync(NaturalPerson p);
         Task<NaturalPerson> AddRelatedPersonAsync(long parentPersonId, RelationType relationType, NaturalPerson p);
+        Task<bool> PersonExistsAsync(string personalNumber);
         Task<NaturalPerson> GetPersonByIdAsync(long id, bool includeRelatedPeople);
         Task<bool> DeleteRelatedPerson(long parentId, long relatedId);
+        Task<bool> DeletePerson(long personId);
         Task<bool> SetPhotoToPersonAsync(long personId, string photoPath);
         PagedList<NaturalPerson> SearchPeople(SearchPeopleRequest searchTerm);
-        Task<GetPersonReportResponse> GetPersonReport(long personId);
+        Task<Dictionary<string, int>> GetPersonReport(long personId);
         Task<bool> CityExistsAsync(int cityId);
         Task<bool> SaveChangesAsync();
     }
