@@ -162,16 +162,7 @@ namespace NaturalPersonAPI.Controllers
                     Error = _localizer["PersonExists"]
                 });
             }
-            var p = new NaturalPerson
-            {
-                BirthDate = person.BirthDate,
-                CityId = person.CityId,
-                FirstName = person.FirstName,
-                Gender = person.Gender.ToString(),
-                LastName = person.LastName,
-                PersonalNumber = person.PersonalNumber,
-                PhoneNumbers = person.PhoneNumbers.Select(x => new PhoneNumber { Phone = x.Phone, Type = x.PhoneNumberType.ToString() }).ToList()
-            };
+            var p = _mapper.Map<NaturalPerson>(person);
 
             var result = await _naturalPersonService.AddRelatedPersonAsync(parentPersonId, relationType, p);
             if (result == null)
@@ -179,7 +170,7 @@ namespace NaturalPersonAPI.Controllers
                 return BadRequest(new AddRelatedPersonResponse
                 {
                     Success = false,
-                    Error = _localizer["PersonNotFound"],
+                    Error = _localizer["CityNotExist"],
                 });
             }
 
