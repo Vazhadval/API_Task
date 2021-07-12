@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "E:\\api task\\API_Task\\Domain\\Domain.csproj": {}
+    "E:\\Projects\\GitHub Projects\\API_Task\\Domain\\Domain.csproj": {}
   },
   "projects": {
-    "E:\\api task\\API_Task\\Domain\\Domain.csproj": {
+    "E:\\Projects\\GitHub Projects\\API_Task\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\api task\\API_Task\\Domain\\Domain.csproj",
+        "projectUniqueName": "E:\\Projects\\GitHub Projects\\API_Task\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "E:\\api task\\API_Task\\Domain\\Domain.csproj",
-        "packagesPath": "C:\\Users\\vazha.dvalishvili\\.nuget\\packages\\",
-        "outputPath": "E:\\api task\\API_Task\\Domain\\obj\\",
+        "projectPath": "E:\\Projects\\GitHub Projects\\API_Task\\Domain\\Domain.csproj",
+        "packagesPath": "C:\\Users\\pc\\.nuget\\packages\\",
+        "outputPath": "E:\\Projects\\GitHub Projects\\API_Task\\Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\vazha.dvalishvili\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\pc\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -64,7 +64,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }

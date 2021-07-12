@@ -26,7 +26,6 @@ namespace NaturalPersonAPI.MappingProfiles
                      })));
 
             CreateMap<CreateNaturalPersonRequest, NaturalPerson>()
-                .ForMember(dest => dest.City, opt => opt.MapFrom(src => new City { Id = src.CityId }))
                 .ForMember(dest => dest.PhoneNumbers, opt =>
                   opt.MapFrom(src => src.PhoneNumbers.Select(x =>
                     new PhoneNumber

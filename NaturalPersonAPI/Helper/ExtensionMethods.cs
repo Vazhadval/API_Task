@@ -172,7 +172,11 @@ namespace NaturalPersonAPI.Helper
                 {
                     try
                     {
-                        appContext.Database.Migrate();
+                        if (appContext.Database.GetPendingMigrations().Any())
+                        {
+                            appContext.Database.Migrate();
+                        }
+
                     }
                     catch (Exception)
                     {

@@ -62,18 +62,8 @@ namespace NaturalPersonAPI.Controllers
                 });
             }
 
-            //var person = _mapper.Map<NaturalPerson>(request);
+            var person = _mapper.Map<NaturalPerson>(request);
 
-            var person = new NaturalPerson
-            {
-                BirthDate = request.BirthDate,
-                CityId = request.CityId,
-                FirstName = request.FirstName,
-                Gender = request.Gender,
-                LastName = request.LastName,
-                PersonalNumber = request.PersonalNumber,
-                PhoneNumbers = request.PhoneNumbers.Select(x => new PhoneNumber { Phone = x.Phone, Type = x.PhoneNumberType }).ToList()
-            };
 
             var result = await _naturalPersonService.CreatePersonAsync(person);
             if (result == null)
