@@ -123,7 +123,7 @@
   <data name="AtLeastOnePhone" xml:space="preserve">
     <value>Person shoud have at least one phone number</value>
   </data>
-  <data name="CityNotExists" xml:space="preserve">
+  <data name="CityNotExist" xml:space="preserve">
     <value>City does not exist</value>
   </data>
   <data name="FirstNameLengthMsg" xml:space="preserve">

@@ -10,7 +10,7 @@ using NaturalPersonAPI.DataContext;
 namespace NaturalPersonAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210710202307_initial")]
+    [Migration("20210712125928_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -143,9 +143,9 @@ namespace NaturalPersonAPI.Migrations
                             Id = 5L,
                             BirthDate = new DateTime(1994, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CityId = 5,
-                            FirstName = "glexo",
+                            FirstName = "Vazha",
                             Gender = "Male",
-                            LastName = "vichi",
+                            LastName = "Dvalishvili",
                             PersonalNumber = "333"
                         });
                 });

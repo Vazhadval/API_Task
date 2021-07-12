@@ -141,9 +141,9 @@ namespace NaturalPersonAPI.Migrations
                             Id = 5L,
                             BirthDate = new DateTime(1994, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CityId = 5,
-                            FirstName = "glexo",
+                            FirstName = "Vazha",
                             Gender = "Male",
-                            LastName = "vichi",
+                            LastName = "Dvalishvili",
                             PersonalNumber = "333"
                         });
                 });

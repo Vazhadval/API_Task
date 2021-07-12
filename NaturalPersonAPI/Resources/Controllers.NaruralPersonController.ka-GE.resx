@@ -123,7 +123,7 @@
   <data name="AtLeastOnePhone" xml:space="preserve">
     <value>ფიზიკურ პირს უნდა ქონდეს მინიმუმ 1 ტელეფონის ნომერი</value>
   </data>
-  <data name="CityNotExists" xml:space="preserve">
+  <data name="CityNotExist" xml:space="preserve">
     <value>ქალაქი არ მოიძებნა</value>
   </data>
   <data name="FirstNameLengthMsg" xml:space="preserve">

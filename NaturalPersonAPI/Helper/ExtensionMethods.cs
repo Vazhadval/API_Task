@@ -92,8 +92,8 @@ namespace NaturalPersonAPI.Helper
                   new NaturalPerson
                   {
                       Id = 5,
-                      FirstName = "glexo",
-                      LastName = "vichi",
+                      FirstName = "Vazha",
+                      LastName = "Dvalishvili",
                       PersonalNumber = "333",
                       BirthDate = new DateTime(1994, 1, 1),
                       CityId = 5,

@@ -112,7 +112,7 @@ namespace NaturalPersonAPI.Migrations
                     { 3L, new DateTime(1994, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "Bruce", "Male", "Wayne", "333", null },
                     { 1L, new DateTime(1994, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, "Pitter", "Male", "Parker", "111", null },
                     { 2L, new DateTime(1994, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 4, "Black", "Male", "Panther", "222", null },
-                    { 5L, new DateTime(1994, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 5, "glexo", "Male", "vichi", "333", null }
+                    { 5L, new DateTime(1994, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 5, "Vazha", "Male", "Dvalishvili", "333", null }
                 });
 
             migrationBuilder.InsertData(
