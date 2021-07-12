@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using NaturalPersonAPI.DataContext;
 using NaturalPersonAPI.Helper;
+using NaturalPersonAPI.Middlewares;
 using NaturalPersonAPI.Repository;
 using System;
 using System.Collections.Generic;
@@ -69,6 +70,9 @@ namespace NaturalPersonAPI
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "NaturalPersonAPI v1"));
             }
+
+            //custom middleware
+            app.UseErrorLogging();
 
             app.UseHttpsRedirection();
 

@@ -49,7 +49,7 @@ namespace NaturalPersonAPI.Controllers
                 BirthDate = request.BirthDate,
                 CityId = request.CityId,
                 FirstName = request.FirstName,
-                Gender = request.Gender.ToString(),
+                Gender = request.Gender,
                 LastName = request.LastName,
                 PersonalNumber = request.PersonalNumber,
                 PhoneNumbers = request.PhoneNumbers.Select(x => new PhoneNumber { Phone = x.Phone, Type = x.PhoneNumberType.ToString() }).ToList()

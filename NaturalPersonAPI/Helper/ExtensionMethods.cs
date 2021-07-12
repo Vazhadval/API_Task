@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NaturalPersonAPI.DataContext;
 using NaturalPersonAPI.Domain;
+using NaturalPersonAPI.Middlewares;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -205,6 +207,11 @@ namespace NaturalPersonAPI.Helper
 
 
             return true;
+        }
+
+        public static IApplicationBuilder UseErrorLogging(this IApplicationBuilder builder)
+        {
+            return builder.UseMiddleware<ErrorLoggingMiddleware>();
         }
     }
 }
