@@ -17,6 +17,7 @@ namespace NaturalPersonAPI.Domain
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Gender { get; set; }
+        [DoNotPatch]
         public string PersonalNumber { get; set; }
         public DateTime BirthDate { get; set; }
         public int CityId { get; set; }

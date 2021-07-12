@@ -159,9 +159,17 @@ namespace NaturalPersonAPI.Controllers
             });
         }
 
-        [HttpPost("/addRelatedPerson/{parentPersonId}")]
+        [HttpPost("AddRelatedPerson/{parentPersonId}")]
         public async Task<IActionResult> AddRelatedPerson(long parentPersonId, RelationType relationType, CreateNaturalPersonRequest person)
         {
+            if (await _naturalPersonService.PersonExistsAsync(person.PersonalNumber))
+            {
+                return BadRequest(new CreateNaturalPersonResponse
+                {
+                    Success = false,
+                    Error = _localizer["PersonExists"]
+                });
+            }
             var p = new NaturalPerson
             {
                 BirthDate = person.BirthDate,
