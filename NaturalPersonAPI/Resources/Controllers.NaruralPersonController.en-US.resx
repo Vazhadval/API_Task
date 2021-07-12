@@ -135,6 +135,9 @@
   <data name="IncorrectFileFormat" xml:space="preserve">
     <value>Incorrect file format</value>
   </data>
+  <data name="LastNameLengthMsg" xml:space="preserve">
+    <value>LastName should be between 2-50 characters</value>
+  </data>
   <data name="MaleOrFemale" xml:space="preserve">
     <value>Choose 'Male' or 'Female'</value>
   </data>

@@ -206,5 +206,61 @@ namespace NaturalPersonAPI.Repository
 
             return await _context.SaveChangesAsync() > 0;
         }
+
+        public async Task<NaturalPerson> UpdatePersonAsync(NaturalPerson p)
+        {
+            var personFromDb = await GetPersonByIdAsync(p.Id, true);
+            if (personFromDb == null)
+            {
+                return null;
+            }
+
+            if (p.FirstName != null)
+            {
+                personFromDb.FirstName = p.FirstName;
+            }
+
+            if (p.LastName != null)
+            {
+                personFromDb.LastName = p.LastName;
+            }
+
+            if (p.Gender != null)
+            {
+                personFromDb.Gender = p.Gender;
+            }
+
+            if (p.PersonalNumber != null)
+            {
+                personFromDb.PersonalNumber = p.PersonalNumber;
+            }
+
+            if (p.BirthDate != default(DateTime))
+            {
+                personFromDb.BirthDate = p.BirthDate;
+            }
+
+            if (p.CityId > 0)
+            {
+                personFromDb.CityId = p.CityId;
+                personFromDb.City = await GetCityById(p.CityId);
+            }
+
+            if (p.PhoneNumbers.Count() > 0)
+            {
+                personFromDb.PhoneNumbers = p.PhoneNumbers;
+            }
+
+
+            _context.NaturalPeople.Update(personFromDb);
+            await _context.SaveChangesAsync();
+
+            return personFromDb;
+        }
+
+        private async Task<City> GetCityById(int cityId)
+        {
+            return await _context.Cities.FirstOrDefaultAsync(x => x.Id == cityId);
+        }
     }
 }

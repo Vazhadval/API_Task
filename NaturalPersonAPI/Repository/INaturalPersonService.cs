@@ -15,6 +15,7 @@ namespace NaturalPersonAPI.Repository
     public interface INaturalPersonService
     {
         Task<NaturalPerson> CreatePersonAsync(NaturalPerson p);
+        Task<NaturalPerson> UpdatePersonAsync(NaturalPerson p);
         Task<NaturalPerson> AddRelatedPersonAsync(long parentPersonId, RelationType relationType, NaturalPerson p);
         Task<bool> PersonExistsAsync(string personalNumber);
         Task<NaturalPerson> GetPersonByIdAsync(long id, bool includeRelatedPeople);

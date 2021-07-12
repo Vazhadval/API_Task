@@ -83,27 +83,32 @@ namespace NaturalPersonAPI.Controllers
             });
         }
 
-        [HttpPatch("UpdatePerson/{personId}")]
-        public async Task<IActionResult> UpdatePerson(long personId, [FromBody] JsonPatchDocument<NaturalPerson> patch)
+        [HttpPatch("UpdatePerson")]
+        public async Task<IActionResult> UpdatePerson(UpdateNaturalpersonRequest person)
         {
-            var p = await _naturalPersonService.GetPersonByIdAsync(personId, false);
-            if (p == null)
+            if (person.CityId > 0 && !await _naturalPersonService.CityExistsAsync(person.CityId))
             {
                 return NotFound(new UpdatePersonResponse
                 {
-                    Success = false,
-                    Error = _localizer["PersonNotFound"]
+                    Error = _localizer["CityNotExist"],
+                    Success = false
                 });
             }
-            patch.CheckForNotUpdatableProperties();
+            var mappedPerson = _mapper.Map<NaturalPerson>(person);
 
-            patch.ApplyTo(p, ModelState);
-
-            await _naturalPersonService.SaveChangesAsync();
+            var result = await _naturalPersonService.UpdatePersonAsync(mappedPerson);
+            if (result == null)
+            {
+                return NotFound(new UpdatePersonResponse
+                {
+                    Error = _localizer["PersonNotFound"],
+                    Success = false
+                });
+            }
 
             return Ok(new UpdatePersonResponse
             {
-                UpatedPerson = _mapper.Map<NaturalPersonDto>(p),
+                UpatedPerson = _mapper.Map<NaturalPersonDto>(result),
                 Success = true
             });
         }

@@ -135,6 +135,9 @@
   <data name="IncorrectFileFormat" xml:space="preserve">
     <value>ფაილის არასწორი ფორმატი</value>
   </data>
+  <data name="LastNameLengthMsg" xml:space="preserve">
+    <value>გვარი უნდა იყოს 2-50 სიმბოლომდე</value>
+  </data>
   <data name="MaleOrFemale" xml:space="preserve">
     <value>აირჩიეთ 'Male' ან 'Female'</value>
   </data>

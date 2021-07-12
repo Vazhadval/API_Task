@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace NaturalPersonAPI.MappingProfiles
 {
-    public class DomainToResponseProfile : Profile
+    public class MappingProfile : Profile
     {
-        public DomainToResponseProfile()
+        public MappingProfile()
         {
             CreateMap<NaturalPerson, NaturalPersonDto>()
                 .ForMember(dest => dest.City, opt => opt.MapFrom(src => new CityDto { CityName = src.City.CityName, Id = src.City.Id }))
@@ -27,6 +27,15 @@ namespace NaturalPersonAPI.MappingProfiles
 
             CreateMap<CreateNaturalPersonRequest, NaturalPerson>()
                 .ForMember(dest => dest.PhoneNumbers, opt =>
+                  opt.MapFrom(src => src.PhoneNumbers.Select(x =>
+                    new PhoneNumber
+                    {
+                        Type = x.PhoneNumberType,
+                        Phone = x.Phone,
+                    })));
+
+            CreateMap<UpdateNaturalpersonRequest, NaturalPerson>()
+               .ForMember(dest => dest.PhoneNumbers, opt =>
                   opt.MapFrom(src => src.PhoneNumbers.Select(x =>
                     new PhoneNumber
                     {
