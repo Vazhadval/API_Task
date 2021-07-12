@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using NaturalPersonAPI.Contracts.Dtos;
+using NaturalPersonAPI.Contracts.Requests;
 using NaturalPersonAPI.Domain;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,16 @@ namespace NaturalPersonAPI.MappingProfiles
                          Phone = x.Phone,
                          Type = x.Type
                      })));
+
+            CreateMap<CreateNaturalPersonRequest, NaturalPerson>()
+                .ForMember(dest => dest.City, opt => opt.MapFrom(src => new City { Id = src.CityId }))
+                .ForMember(dest => dest.PhoneNumbers, opt =>
+                  opt.MapFrom(src => src.PhoneNumbers.Select(x =>
+                    new PhoneNumber
+                    {
+                        Type = x.PhoneNumberType,
+                        Phone = x.Phone,
+                    })));
         }
     }
 }

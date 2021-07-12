@@ -62,6 +62,8 @@ namespace NaturalPersonAPI.Controllers
                 });
             }
 
+            var person = _mapper.Map<NaturalPerson>(request);
+
             var person = new NaturalPerson
             {
                 BirthDate = request.BirthDate,
