@@ -1,5 +1,4 @@
-﻿using Domain.Attributes;
-using NaturalPersonAPI.Domain.Enums;
+﻿using NaturalPersonAPI.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
