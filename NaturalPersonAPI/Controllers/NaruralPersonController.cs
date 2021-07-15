@@ -83,7 +83,7 @@ namespace NaturalPersonAPI.Controllers
             });
         }
 
-        [HttpPatch("UpdatePerson")]
+        [HttpPut("UpdatePerson")]
         public async Task<IActionResult> UpdatePerson(UpdateNaturalpersonRequest person)
         {
             if (person.CityId > 0 && !await _naturalPersonService.CityExistsAsync(person.CityId))
@@ -157,7 +157,7 @@ namespace NaturalPersonAPI.Controllers
         }
 
         [HttpPost("AddRelatedPerson/{parentPersonId}")]
-        public async Task<IActionResult> AddRelatedPerson(long parentPersonId, RelationType relationType, CreateNaturalPersonRequest person)
+        public async Task<IActionResult> AddRelatedPerson(long parentPersonId, [Required] RelationType relationType, CreateNaturalPersonRequest person)
         {
             var personFromDb = await _naturalPersonService.GetPersonByIdAsync(parentPersonId, false);
             if (personFromDb == null)
