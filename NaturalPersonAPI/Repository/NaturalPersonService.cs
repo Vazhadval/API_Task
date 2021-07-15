@@ -53,13 +53,13 @@ namespace NaturalPersonAPI.Repository
 
         public async Task<NaturalPerson> CreatePersonAsync(NaturalPerson p)
         {
-            if (p.PhoneNumbers?.Count() > 0)
-            {
-                foreach (var phone in p.PhoneNumbers)
-                {
-                    await _context.PhoneNumbers.AddAsync(phone);
-                }
-            }
+            //if (p.PhoneNumbers?.Count() > 0)
+            //{
+            //    foreach (var phone in p.PhoneNumbers)
+            //    {
+            //        await _context.PhoneNumbers.AddAsync(phone);
+            //    }
+            //}
 
             await _context.NaturalPeople.AddAsync(p);
 
@@ -77,10 +77,10 @@ namespace NaturalPersonAPI.Repository
                 return false;
             }
 
-            var phoneNumbersOfPerson = _context.PhoneNumbers.Where(x => x.NaturalPersonId == personId);
+            //var phoneNumbersOfPerson = _context.PhoneNumbers.Where(x => x.NaturalPersonId == personId);
+            //_context.PhoneNumbers.RemoveRange(phoneNumbersOfPerson);
             var relations = _context.Relations.Where(x => x.parentPersonId == personId || x.RelatedPersonId == personId);
 
-            _context.PhoneNumbers.RemoveRange(phoneNumbersOfPerson);
             _context.Relations.RemoveRange(relations);
             _context.NaturalPeople.Remove(p);
 
@@ -101,8 +101,8 @@ namespace NaturalPersonAPI.Repository
             _context.NaturalPeople.Remove(relatedPerson);
             //remove relation
             _context.Relations.Remove(relation);
-            //remove phone numbers also
-            _context.PhoneNumbers.RemoveRange(relatedPerson.PhoneNumbers);
+            ////remove phone numbers also
+            //_context.PhoneNumbers.RemoveRange(relatedPerson.PhoneNumbers);
 
             await _context.SaveChangesAsync();
 

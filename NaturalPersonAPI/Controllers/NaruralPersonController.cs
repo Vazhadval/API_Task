@@ -159,6 +159,16 @@ namespace NaturalPersonAPI.Controllers
         [HttpPost("AddRelatedPerson/{parentPersonId}")]
         public async Task<IActionResult> AddRelatedPerson(long parentPersonId, RelationType relationType, CreateNaturalPersonRequest person)
         {
+            var personFromDb = await _naturalPersonService.GetPersonByIdAsync(parentPersonId, false);
+            if (personFromDb == null)
+            {
+                return BadRequest(new CreateNaturalPersonResponse
+                {
+                    Success = false,
+                    Error = _localizer["PersonNotFound"]
+                });
+            }
+
             if (await _naturalPersonService.PersonExistsAsync(person.PersonalNumber))
             {
                 return BadRequest(new CreateNaturalPersonResponse
@@ -200,7 +210,7 @@ namespace NaturalPersonAPI.Controllers
         }
 
         [HttpDelete("DeletePerson/{personId}")]
-        public async Task<IActionResult> DeletePreson(long personId)
+        public async Task<IActionResult> DeletePerson(long personId)
         {
             var result = await _naturalPersonService.DeletePerson(personId);
             if (!result)

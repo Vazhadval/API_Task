@@ -7,3 +7,4 @@ NaturalPersonAPI.Contracts/obj/
 NaturalPersonAPI/bin/
 
 NaturalPersonAPI/wwwroot/uploads/
+Domain/obj/
