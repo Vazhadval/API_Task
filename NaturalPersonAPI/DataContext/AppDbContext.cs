@@ -12,6 +12,7 @@ namespace NaturalPersonAPI.DataContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
+
         }
 
 
