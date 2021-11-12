@@ -77,7 +77,7 @@ namespace NaturalPersonAPI
             app.UseAuthorization();
 
             var supportedCultures = new[] { "ka-GE", "en-US" };
-            var localizationOptions = new RequestLocalizationOptions().SetDefaultCulture(supportedCultures[0])
+            var localizationOptions = new RequestLocalizationOptions().SetDefaultCulture(supportedCultures[1])
                 .AddSupportedCultures(supportedCultures)
                 .AddSupportedUICultures(supportedCultures);
 
