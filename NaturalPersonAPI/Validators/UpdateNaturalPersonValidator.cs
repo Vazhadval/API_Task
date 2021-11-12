@@ -12,9 +12,9 @@ namespace NaturalPersonAPI.Validators
 {
     public class UpdateNaturalPersonValidator : AbstractValidator<UpdateNaturalpersonRequest>
     {
-        private readonly IStringLocalizer<NaruralPersonController> _localizer;
+        private readonly IStringLocalizer<NaturalPersonController> _localizer;
 
-        public UpdateNaturalPersonValidator(IStringLocalizer<NaruralPersonController> localizer)
+        public UpdateNaturalPersonValidator(IStringLocalizer<NaturalPersonController> localizer)
         {
             _localizer = localizer;
 

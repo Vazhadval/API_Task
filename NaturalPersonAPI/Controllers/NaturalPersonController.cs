@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Microsoft.Extensions.Localization;
 using NaturalPersonAPI.Contracts;
 using NaturalPersonAPI.Contracts.Dtos;
@@ -13,26 +11,22 @@ using NaturalPersonAPI.Domain.Enums;
 using NaturalPersonAPI.Helper;
 using NaturalPersonAPI.Repository;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Reflection;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace NaturalPersonAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class NaruralPersonController : ControllerBase
+    public class NaturalPersonController : ControllerBase
     {
-        private readonly IStringLocalizer<NaruralPersonController> _localizer;
+        private readonly IStringLocalizer<NaturalPersonController> _localizer;
         private readonly INaturalPersonService _naturalPersonService;
         private readonly IFileProcessingService _fileProcessingService;
         private readonly IMapper _mapper;
 
-        public NaruralPersonController(IStringLocalizer<NaruralPersonController> localizer, INaturalPersonService naturalPersonService, IFileProcessingService fileProcessingService, IMapper mapper)
+        public NaturalPersonController(IStringLocalizer<NaturalPersonController> localizer, INaturalPersonService naturalPersonService, IFileProcessingService fileProcessingService, IMapper mapper)
         {
             _naturalPersonService = naturalPersonService;
             _fileProcessingService = fileProcessingService;

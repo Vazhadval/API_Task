@@ -13,9 +13,9 @@ namespace NaturalPersonAPI.Validators
 {
     public class CreateNaturalPersonValidator : AbstractValidator<CreateNaturalPersonRequest>
     {
-        private readonly IStringLocalizer<NaruralPersonController> _localizer;
+        private readonly IStringLocalizer<NaturalPersonController> _localizer;
 
-        public CreateNaturalPersonValidator(IStringLocalizer<NaruralPersonController> localizer)
+        public CreateNaturalPersonValidator(IStringLocalizer<NaturalPersonController> localizer)
         {
             _localizer = localizer;
 
